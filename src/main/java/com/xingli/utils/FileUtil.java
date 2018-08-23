@@ -151,6 +151,8 @@ public class FileUtil {
 //                tempString = new String(tempString.getBytes("GB2312"), "UTF-8");
 //                System.out.println(file.getName().split("\\.")[0] + '\t' + tempString);
 //                    tempString.trim();
+//                    writer.write(tempString);
+                    tempString="insert into word_association (word) values " + "(\""+ tempString +"\");";
                     writer.write(tempString);
                     writer.newLine();
                     line++;
@@ -185,6 +187,7 @@ public class FileUtil {
 //        List<String> list = scanFiles("D:\\工作\\症状");
 
 //            loadFile("D:\\工作\\症状\\感染科\\脂肪肝.csv", "GBK", "D:\\工作\\症状\\感染科\\脂肪肝.txt", "GBK");
-            loadFile("D:\\工作\\症状\\20180531\\update_symptom.txt", "UTF-8", "D:\\工作\\症状\\20180531\\symptom.txt", "UTF-8");
+//            loadFile("D:\\工作\\症状\\20180531\\update_symptom.txt", "UTF-8", "D:\\工作\\症状\\20180531\\symptom.txt", "UTF-8");
+            loadFile("D:\\工作\\20180621云医生\\14万词条修改.txt","UTF-8","D:\\工作\\20180621云医生\\insert.sql","UTF-8");
         }
     }

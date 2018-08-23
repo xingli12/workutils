@@ -136,7 +136,6 @@ public class HTMLSpirit {
                     log.debug("读取本地图片的地址:" + localImgPath);
 
                     //读取本地的文件
-
                     datas = CommonFileUtils.readBytes(localImgPath);
                 }
                 //【读取网络图片】
@@ -259,14 +258,27 @@ public class HTMLSpirit {
         return htmlStr;
     }
 
-   /** *
-    * @Description:  读html文件为字符串
-    * @param filePath
-    * @return: java.lang.String
-    * @Date: Created in 15:21 2018/6/1/0001
-    * @Modified By: xingli12
-    */
+
     public static String readfile(String filePath) throws Exception {
+//        File file = new File(filePath);
+//        InputStream input = null;
+//        try {
+//            input = new FileInputStream(file);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        StringBuffer buffer = new StringBuffer();
+//        byte[] bytes = new byte[1024];
+//        try {
+//            for (int n; (n = input.read(bytes)) != -1; ) {
+//                buffer.append(new String(bytes, 0, n, "UTF-8"));
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        //        System.out.println(buffer);
+//        return buffer.toString();
+
 
         StringBuffer sb = new StringBuffer();
         BufferedReader ready;
@@ -459,36 +471,5 @@ public class HTMLSpirit {
         File[] files = htmlParentFile.listFiles();
 
         return transformImgToBase64Str(string, path, files);
-    }
-
-    /**
-     * 将html内容转换为txt内容
-     *
-     * @param file
-     * @param htmlContent
-     * @throws Exception
-     */
-
-    public static void convertHtmlToTxt(File file, String htmlContent, String path) throws Exception {
-//        String tempHtmlContent ="";
-        Map<String, Integer> map = new HashMap<>();
-        String[] htmlContents = HTMLSpirit.delHTMLTag(htmlContent);
-        htmlContent = HTMLSpirit.packageDiv(htmlContents, path);
-//        tempHtmlContent = htmlContent;
-        HTMLSpirit.writeTxt(file, htmlContent);
-        HTMLSpirit.packageStr(map, htmlContent);
-        HTMLSpirit.sortMap(map);
-
-    }
-
-    public static void main(String[] args) throws Exception {
-        File file = new File("d:/disk1/resource/threeCategories/top100/2018.3/Output/共识100/羊水过少 共识/【精彩回顾-产科篇】" +
-                "漆洪波教授妊娠34周前胎膜早破的处理/【精彩回顾-产科篇】漆洪波教授妊娠34周前胎膜早破的处理.html");
-        String path = "D:\\disk1\\resource\\threeCategories\\top100\\2018.3\\Output\\共识100\\羊水过少 共识\\【精彩回顾-产科篇】漆洪波教授妊娠34周前胎膜早破的处理";
-        String str = HTMLSpirit.readfile(file.getPath());
-        long start = System.currentTimeMillis();
-        convertHtmlToTxt(file, str, path);
-        long end = System.currentTimeMillis();
-        System.out.println("(2)转换txt耗时："+(end-start)+"毫秒");
     }
 }

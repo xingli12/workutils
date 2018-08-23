@@ -34,6 +34,7 @@ public class TxtTransport {
         }
         reader.close();
     }
+
     public static void mergeFiles(String outFile, String[] files) {
         FileChannel outChannel = null;
 //        out.println("Merge " + Arrays.toString(files) + " into " + outFile);
