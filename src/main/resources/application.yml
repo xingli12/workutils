@@ -1,0 +1,103 @@
+#server:
+#  port: 8200
+#eureka:
+#  ## 本地测试放开此配置，或者从启动参数中设置 --eureka.client.serviceUrl.defaultZone=http://localhost:9000/eureka/ --spring.cloud.config.profile=dev &
+#    client:
+#      service-url:
+#        defaultZone: http://172.31.3.164:9000//eureka/
+#
+#spring:
+#  application:
+#    name: search-service-v1.0
+#  aop:
+#      auto: true
+#      proxy-target-class: true
+#  datasource:
+#      driver-class-name: com.mysql.jdbc.Driver
+##      url: jdbc:mysql://172.31.3.164/label_dev?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+##      username: cdss
+##      password: Cdss!2018
+#      url: jdbc:mysql://localhost/spelldb?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+#      username: root
+#      password: root
+#
+#mybatis:
+#  mapper-locations:
+#  - classpath:mapper/*.xml
+#  type-aliases-package: com.iflytek
+#
+#feign:
+# hystrix:
+#  enabled: true
+#
+#
+#search:
+#  #环境配置
+#  environment-confg:
+#    esIp: 172.31.3.47
+#    clusteName: main
+#    lambda: 0.9
+#  #替代检索资源中cfg/config.txt内容
+#  config:
+#    #检索服务中使用到的基础目录
+#    basePath: D:\iflytek\git_workspace\search\assist_search\
+#
+#    #------------------------#
+#    #            融合        #
+#    #------------------------#
+#    # 取值范围 {Filename, SearchLevel, ContentLabel, NoMerge}
+#    # Filename为将同一个Filename的片段融合
+#    # SearchLevel为将同一个文件的同一个检索级别的片段融合
+#    mergeLevel: NoMerge
+#  #------------------------#
+#  #          词典          #
+#  #------------------------#
+#  lexicon:
+#    stopword: res/Lexicon/stopword.crf.txt
+#    wordweight: res/Lexicon/wordweight.txt
+#    medicalLexical: res/Lexicon/medical_lexicon.json
+
+
+  #------------------------#
+  #          QR纠错        #
+  #------------------------#
+#  spell-config:
+#    dictionary: ${search.config.basePath}src\main\resources\Dictionary.txt
+#    indexPath: ${search.config.basePath}newPath
+
+server:
+  port: 8100
+
+spring:
+  application:
+    name: search-v1.0
+  datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost/search?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+      username: cdss
+      password: Cdss!2018
+
+myProps:
+  esIp: 172.31.3.47
+  clusteName: main
+  lambda: 0.9
+
+search:
+  config:
+    #检索服务中使用到的基础目录
+    #basePath: /disk1/autoBuildService/search/run
+    basePath: D:/IdeaProjects/search/assist_search
+
+  # 图片服务器配置
+  image:
+    services:
+      # 资源中格式化的图片地址，需要在检索结果处理流程中替换为url
+      prefix: "{images_server}"
+      url: http://172.31.3.164:18080
+
+
+mybatis:
+  mapper-locations:
+  - classpath:mapper/*.xml
+  type-aliases-package: com.iflytek.model
+

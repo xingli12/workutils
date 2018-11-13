@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingli.dao.AssociationWordDao">
+    <resultMap id="BaseResultMap" type="com.xingli.model.AssociationWordDto" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="word" property="word" jdbcType="VARCHAR" />
+        <result column="num" property="num" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="classify" property="classify" jdbcType="VARCHAR" />
+        <result column="word_pinyin" property="wordPinyin" jdbcType="VARCHAR" />
+        <result column="word_shoup" property="wordShoup" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+    id, word, num, create_time, update_time, classify, word_pinyin, word_shoup
+    </sql>
+
+    <select id="selectAssociationWordList" resultMap="BaseResultMap"  parameterType="com.xingli.model.AssociationWordDto">
+    select
+        word
+    from association_word
+        where word like CONCAT(#{word,jdbcType=VARCHAR},'%')
+    order by num desc
+    limit 10
+    </select>
+
+    <select id="selectHomonymWordList" resultMap="BaseResultMap"  parameterType="com.xingli.model.AssociationWordDto">
+    select
+        word
+    from association_word
+        where word_pinyin like CONCAT(#{wordPinyin,jdbcType=VARCHAR},'%')
+    order by num desc
+    limit #{num,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAssociationWord" resultMap="BaseResultMap"  parameterType="com.xingli.model.AssociationWordDto">
+        select
+          <include refid="Base_Column_List" />
+        from association_word
+            where word = #{word,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="addAssociationWord" useGeneratedKeys="true" parameterType="com.xingli.model.AssociationWordDto">
+        insert into association_word (word,num,create_time,update_time,classify,word_pinyin,word_shoup)
+        values (#{word,jdbcType=VARCHAR},#{num,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{classify,jdbcType=VARCHAR},#{wordPinyin,jdbcType=VARCHAR}
+        ,#{wordShoup,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateAssociationWord" parameterType="com.xingli.model.AssociationWordDto">
+        update association_word set num = #{num,jdbcType=INTEGER},update_time = #{updateTime,jdbcType=TIMESTAMP},
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="getAllWords" resultMap="BaseResultMap">
+        select
+          id,word
+        from association_word
+        limit 10000
+    </select>
+
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach  close=";" collection="list" index="index" item="record" open="" separator=";">
+            UPDATE association_word
+            SET word_pinyin= #{record.wordPinyin,jdbcType=VARCHAR},
+            word_shoup= #{record.wordShoup,jdbcType=VARCHAR}
+            where id = #{record.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+</mapper>
